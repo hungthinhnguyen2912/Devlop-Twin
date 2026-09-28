@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: devtwin-postgres
+    environment:
+      POSTGRES_DB: devtwin
+      POSTGRES_USER: devtwin
+      POSTGRES_PASSWORD: devtwin
+    ports:
+      - "5432:5432"
+    volumes:
+      - devtwin_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U devtwin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  devtwin_pgdata:
