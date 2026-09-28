@@ -21,8 +21,8 @@ Mục tiêu: có skeleton chạy được trên máy local, chưa có logic gì.
 
 ### Backend
 
-- [ ] Tạo project Spring Boot bằng [Spring Initializr](https://start.spring.io):
-  - Gradle - Groovy, Java 21, Spring Boot 3.x
+- [X] Tạo project Spring Boot bằng [Spring Initializr](https://start.spring.io):
+  - Maven, Java 21, Spring Boot 4.x
   - Dependencies: `Spring Web`, `Spring Data JPA`, `PostgreSQL Driver`, `Flyway Migration`, `Validation`, `Lombok`
   - Group: `com.devtwin` — Artifact: `backend`
   - Giải nén vào folder `backend/`

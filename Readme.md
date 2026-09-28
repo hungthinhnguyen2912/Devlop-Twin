@@ -415,7 +415,7 @@ Mục tiêu cuối cùng là xây dựng một hệ thống có thể trả lờ
 
 | Thành phần | Công nghệ |
 |---|---|
-| Backend | Java 21, Spring Boot 3, Gradle |
+| Backend | Java 21, Spring Boot 4, Maven |
 | Database | PostgreSQL 16 (Docker), Flyway migration |
 | GitHub API | Spring `RestClient` (REST API v3) |
 | AI | Google Gemini (GenAI Java SDK) |
@@ -436,7 +436,7 @@ Developer_Twin/
 ├── .env.example               # Mẫu biến môi trường (copy thành .env)
 ├── docs/                      # Tài liệu chi tiết từng module (viết dần)
 │
-├── backend/                   # Spring Boot
+├── DevTwin_Backend/demo/      # Spring Boot backend
 │   └── src/main/
 │       ├── java/com/devtwin/
 │       │   ├── api/           # REST controllers
@@ -479,8 +479,8 @@ docker compose up -d
 #    Copy .env.example thành .env, điền GITHUB_TOKEN (và GEMINI_API_KEY sau này)
 
 # 3. Backend
-cd backend
-./gradlew bootRun          # chạy tại http://localhost:8080
+cd DevTwin_Backend/demo
+./mvnw spring-boot:run     # chạy tại http://localhost:8080
 
 # 4. Frontend (terminal khác)
 cd frontend
