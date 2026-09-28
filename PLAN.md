@@ -26,7 +26,7 @@ Mục tiêu: có skeleton chạy được trên máy local, chưa có logic gì.
   - Dependencies: `Spring Web`, `Spring Data JPA`, `PostgreSQL Driver`, `Flyway Migration`, `Validation`, `Lombok`
   - Group: `com.devtwin` — Artifact: `backend`
   - Giải nén vào folder `backend/`
-- [ ] Tạo các package rỗng theo kiến trúc module (xem cây thư mục trong Readme):
+- [x] Tạo các package rỗng theo kiến trúc module (xem cây thư mục trong Readme):
   `api`, `connector`, `connector.github`, `analyzer`, `twinengine`, `knowledge`, `evidence`, `ai`, `common`
 - [ ] Chạy `docker compose up -d` để bật Postgres (file `docker-compose.yml` đã có sẵn ở root)
 - [ ] Cấu hình `application.yml` kết nối Postgres (db: `devtwin`, user/pass: `devtwin`)
