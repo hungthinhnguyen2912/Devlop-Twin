@@ -1,21 +1,36 @@
 # Secrets
 .env
 
-# Java / Gradle
-backend/build/
-backend/.gradle/
-backend/out/
+# Java / Maven / Gradle
 *.class
+*.jar
+*.war
+*.nar
+*.ear
+*.log
+target/
+build/
+.gradle/
+out/
 
 # IDE
 .idea/
 *.iml
 .vscode/
+*.ctxt
+.mtj.tmp/
 
 # Node / Vite
-frontend/node_modules/
-frontend/dist/
+node_modules/
+dist/
 npm-debug.log*
+
+# Archives and JVM crash logs
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
 
 # OS
 Thumbs.db
