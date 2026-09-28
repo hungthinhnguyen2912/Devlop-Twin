@@ -1,3 +1,6 @@
+server:
+  port: ${SERVER_PORT:8900}
+
 spring:
   application:
     name: developer-twin-backend
