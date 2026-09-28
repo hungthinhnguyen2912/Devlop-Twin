@@ -25,14 +25,14 @@ Mục tiêu: có skeleton chạy được trên máy local, chưa có logic gì.
   - Maven, Java 21, Spring Boot 4.x
   - Dependencies: `Spring Web`, `Spring Data JPA`, `PostgreSQL Driver`, `Flyway Migration`, `Validation`, `Lombok`
   - Group: `com.devtwin` — Artifact: `backend`
-  - Giải nén vào folder `backend/`
+  - Giải nén vào folder `DevTwin_Backend/demo/`
 - [x] Tạo các package rỗng theo kiến trúc module (xem cây thư mục trong Readme):
   `api`, `connector`, `connector.github`, `analyzer`, `twinengine`, `knowledge`, `evidence`, `ai`, `common`
 - [x] Chạy `docker compose up -d` để bật Postgres (file `docker-compose.yml` đã có sẵn ở root)
 - [x] Cấu hình `application.yml` kết nối Postgres (db: `devtwin`, user/pass: `devtwin`)
 - [x] Tạo migration Flyway đầu tiên `V1__init.sql` — bảng `raw_data`, copy DDL từ [docs/database.md](./docs/database.md)
 - [x] Viết 1 endpoint `GET /api/health` trả về `{"status": "ok"}`
-- [ ] **Kiểm tra**: `./gradlew bootRun` chạy không lỗi, mở `http://localhost:8080/api/health` thấy kết quả
+- [ ] **Kiểm tra**: `./mvnw spring-boot:run` chạy không lỗi, mở `http://localhost:8080/api/health` thấy kết quả
 
 ### Frontend
 
