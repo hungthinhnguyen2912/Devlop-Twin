@@ -32,15 +32,15 @@ Mục tiêu: có skeleton chạy được trên máy local, chưa có logic gì.
 - [x] Cấu hình `application.yml` kết nối Postgres (db: `devtwin`, user/pass: `devtwin`)
 - [x] Tạo migration Flyway đầu tiên `V1__init.sql` — bảng `raw_data`, copy DDL từ [docs/database.md](./docs/database.md)
 - [x] Viết 1 endpoint `GET /api/health` trả về `{"status": "ok"}`
-- [ ] **Kiểm tra**: `./mvnw spring-boot:run` chạy không lỗi, mở `http://localhost:8080/api/health` thấy kết quả
+- [x] **Kiểm tra**: `./mvnw spring-boot:run` chạy không lỗi, mở `http://localhost:8900/api/health` thấy kết quả
 
 ### Frontend
 
-- [ ] Tạo project: `npm create vite@latest frontend -- --template react-ts`
-- [ ] Cài Tailwind CSS (theo docs Tailwind + Vite)
-- [ ] Cấu hình proxy trong `vite.config.ts`: `/api` → `http://localhost:8080`
-- [ ] Trang chủ gọi `GET /api/health` và hiển thị kết quả
-- [ ] **Kiểm tra**: `npm run dev`, mở `http://localhost:5173` thấy status "ok" từ backend
+- [x] Tạo project: `npm create vite@latest DevTwin_Frontend -- --template react-ts`
+- [x] Cài Tailwind CSS (theo docs Tailwind + Vite)
+- [x] Cấu hình proxy trong `vite.config.ts`: `/api` → `http://localhost:8900`
+- [x] Trang chủ gọi `GET /api/health` và hiển thị kết quả
+- [x] **Kiểm tra**: `npm run dev`, mở `http://localhost:5173` thấy status "ok" từ backend
 
 ### Chung
 
