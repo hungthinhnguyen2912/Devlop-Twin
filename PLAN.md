@@ -29,7 +29,7 @@ Mục tiêu: có skeleton chạy được trên máy local, chưa có logic gì.
 - [x] Tạo các package rỗng theo kiến trúc module (xem cây thư mục trong Readme):
   `api`, `connector`, `connector.github`, `analyzer`, `twinengine`, `knowledge`, `evidence`, `ai`, `common`
 - [x] Chạy `docker compose up -d` để bật Postgres (file `docker-compose.yml` đã có sẵn ở root)
-- [ ] Cấu hình `application.yml` kết nối Postgres (db: `devtwin`, user/pass: `devtwin`)
+- [x] Cấu hình `application.yml` kết nối Postgres (db: `devtwin`, user/pass: `devtwin`)
 - [ ] Tạo migration Flyway đầu tiên `V1__init.sql` — bảng `raw_data`, copy DDL từ [docs/database.md](./docs/database.md)
 - [ ] Viết 1 endpoint `GET /api/health` trả về `{"status": "ok"}`
 - [ ] **Kiểm tra**: `./gradlew bootRun` chạy không lỗi, mở `http://localhost:8080/api/health` thấy kết quả

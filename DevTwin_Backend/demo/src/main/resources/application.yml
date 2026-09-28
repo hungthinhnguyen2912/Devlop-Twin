@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: developer-twin-backend
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:devtwin}
+    username: ${DB_USERNAME:devtwin}
+    password: ${DB_PASSWORD:devtwin}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
