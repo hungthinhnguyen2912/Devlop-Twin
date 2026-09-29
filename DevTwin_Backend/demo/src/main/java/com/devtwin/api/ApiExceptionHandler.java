@@ -1,6 +1,8 @@
 package com.devtwin.api;
 
+import com.devtwin.analyzer.AnalyzerInputException;
 import com.devtwin.connector.github.GithubApiException;
+import com.devtwin.twinengine.TwinNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,18 @@ public class ApiExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ApiError> handleConstraintViolation(ConstraintViolationException exception) {
         return ResponseEntity.badRequest().body(new ApiError(400, exception.getMessage(), Instant.now()));
+    }
+
+    @ExceptionHandler(AnalyzerInputException.class)
+    public ResponseEntity<ApiError> handleAnalyzerInputException(AnalyzerInputException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ApiError(HttpStatus.CONFLICT.value(), exception.getMessage(), Instant.now()));
+    }
+
+    @ExceptionHandler(TwinNotFoundException.class)
+    public ResponseEntity<ApiError> handleTwinNotFoundException(TwinNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ApiError(HttpStatus.NOT_FOUND.value(), exception.getMessage(), Instant.now()));
     }
 
     public record ApiError(int status, String message, Instant timestamp) {

@@ -17,6 +17,8 @@ public interface RawDataRepository extends JpaRepository<RawData, Long> {
 
     long countByPlatformAndUsernameAndDataType(String platform, String username, String dataType);
 
+    List<RawData> findAllByPlatformAndUsername(String platform, String username);
+
     @Query("""
             select r.dataType as dataType, count(r) as itemCount, max(r.fetchedAt) as lastFetchedAt
             from RawData r
