@@ -18,3 +18,12 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+
+github:
+  api:
+    base-url: https://api.github.com
+    version: 2026-03-10
+    token: ${GITHUB_TOKEN:}
+    low-rate-limit-threshold: 5
+    stats-retries: 3
+    stats-retry-delay: 1s
