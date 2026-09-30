@@ -14,6 +14,10 @@ spring:
     hibernate:
       ddl-auto: validate
     open-in-view: false
+    properties:
+      hibernate:
+        type:
+          json_format_mapper: com.devtwin.common.Jackson3JsonFormatMapper
 
   flyway:
     enabled: true
@@ -27,3 +31,8 @@ github:
     low-rate-limit-threshold: 5
     stats-retries: 3
     stats-retry-delay: 1s
+
+gemini:
+  api:
+    key: ${GOOGLE_API_KEY:${GEMINI_API_KEY:}}
+    model: ${GEMINI_MODEL:gemini-flash-latest}

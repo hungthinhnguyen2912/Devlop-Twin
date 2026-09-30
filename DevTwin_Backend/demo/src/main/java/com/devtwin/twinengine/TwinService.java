@@ -13,6 +13,10 @@ import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ObjectNode;
 
 import java.time.Instant;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -65,6 +69,12 @@ public class TwinService {
         }
 
         List<SkillClaim> claims = twinEngine.buildClaims(repositories);
+        String sourceHash = sourceHash(profile, repositories);
+        String reusableSummary = twinRepository.findByPlatformAndUsername(PLATFORM, normalizedUsername)
+                .filter(existing -> sourceHash.equals(existing.getSummarySourceHash()))
+                .map(TwinEntity::getAiSummary)
+                .filter(summary -> !summary.isBlank())
+                .orElse(null);
         Instant builtAt = Instant.now();
         twinRepository.deleteSnapshot(PLATFORM, normalizedUsername);
         TwinEntity saved = twinRepository.save(new TwinEntity(
@@ -73,6 +83,8 @@ public class TwinService {
                 displayName,
                 profile,
                 builtAt,
+                reusableSummary,
+                sourceHash,
                 claims
         ));
         return response(saved, repositories);
@@ -86,6 +98,22 @@ public class TwinService {
                         "Twin not found for '" + normalizedUsername
                                 + "'. Run POST /api/twin/" + normalizedUsername + "/build first."
                 ));
+        List<NormalizedRepo> repositories = normalizedRepository
+                .findAllByPlatformAndUsername(PLATFORM, normalizedUsername)
+                .stream()
+                .map(NormalizedRepositoryEntity::toDto)
+                .toList();
+        return response(twin, repositories);
+    }
+
+    @Transactional
+    public DeveloperTwin updateAiSummary(String username, String summary) {
+        String normalizedUsername = normalize(username);
+        TwinEntity twin = twinRepository.findByPlatformAndUsername(PLATFORM, normalizedUsername)
+                .orElseThrow(() -> new TwinNotFoundException(
+                        "Twin not found for '" + normalizedUsername + "'."
+                ));
+        twin.updateAiSummary(summary);
         List<NormalizedRepo> repositories = normalizedRepository
                 .findAllByPlatformAndUsername(PLATFORM, normalizedUsername)
                 .stream()
@@ -153,5 +181,33 @@ public class TwinService {
 
     private String normalize(String username) {
         return username.toLowerCase(Locale.ROOT);
+    }
+
+    private String sourceHash(JsonNode profile, List<NormalizedRepo> repositories) {
+        StringBuilder canonical = new StringBuilder(profile.toString());
+        repositories.stream()
+                .sorted(Comparator.comparing(NormalizedRepo::fullName))
+                .forEach(repository -> {
+                    canonical.append('|').append(repository.fullName())
+                            .append('|').append(repository.description())
+                            .append('|').append(repository.stars())
+                            .append('|').append(repository.createdAt())
+                            .append('|').append(repository.pushedAt());
+                    repository.technologies().stream()
+                            .sorted(Comparator.comparing(technology ->
+                                    technology.name() + '|' + technology.source() + '|' + technology.detail()))
+                            .forEach(technology -> canonical.append('|')
+                                    .append(technology.name()).append('|')
+                                    .append(technology.category()).append('|')
+                                    .append(technology.source()).append('|')
+                                    .append(technology.detail()));
+                });
+        try {
+            byte[] digest = MessageDigest.getInstance("SHA-256")
+                    .digest(canonical.toString().getBytes(StandardCharsets.UTF_8));
+            return HexFormat.of().formatHex(digest);
+        } catch (NoSuchAlgorithmException exception) {
+            throw new IllegalStateException("SHA-256 is unavailable", exception);
+        }
     }
 }

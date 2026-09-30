@@ -57,21 +57,21 @@ Mục tiêu: nhập 1 GitHub username → toàn bộ dữ liệu thô được l
 
 Nguyên tắc từ Readme: Connector chỉ **thu thập**, không phân tích. Kết quả là raw data.
 
-- [ ] Định nghĩa interface `Connector` trong package `connector`:
+- [x] Định nghĩa interface `Connector` trong package `connector`:
   - `String platform()` — ví dụ trả về `"github"`
   - `RawFetchResult fetch(String username)`
-- [ ] Viết entity/repository cho bảng `raw_data` (đã tạo ở M0 — cấu trúc xem [docs/database.md](./docs/database.md))
-- [ ] Viết `GithubApiClient` dùng Spring `RestClient`, đọc token từ biến môi trường `GITHUB_TOKEN`
-- [ ] Fetch **profile**: `GET /users/{username}` → lưu vào `raw_data`
-- [ ] Fetch **danh sách repo**: `GET /users/{username}/repos` (nhớ phân trang, `per_page=100`) → lưu từng repo
-- [ ] Fetch **languages** cho mỗi repo: `GET /repos/{owner}/{repo}/languages`
-- [ ] Fetch **README** cho mỗi repo: `GET /repos/{owner}/{repo}/readme` (decode base64)
-- [ ] Fetch **dependency files** nếu có: thử lấy `package.json`, `pom.xml`, `build.gradle`, `requirements.txt`, `go.mod`, `Dockerfile` qua Contents API
-- [ ] Fetch **commit activity**: `GET /repos/{owner}/{repo}/stats/commit_activity` (chú ý: API này có thể trả 202, cần retry)
-- [ ] Xử lý rate limit: đọc header `X-RateLimit-Remaining`, nếu gần hết thì dừng và báo lỗi rõ ràng
-- [ ] Endpoint `POST /api/ingest/{username}` chạy toàn bộ quá trình fetch (dùng `@Async` hoặc chạy đồng bộ cũng được ở V1)
-- [ ] Endpoint `GET /api/ingest/{username}/status` xem đã fetch được những gì
-- [ ] Cache: nếu dữ liệu đã fetch trong vòng 24h thì không fetch lại (tránh tốn rate limit)
+- [x] Viết entity/repository cho bảng `raw_data` (đã tạo ở M0 — cấu trúc xem [docs/database.md](./docs/database.md))
+- [x] Viết `GithubApiClient` dùng Spring `RestClient`, đọc token từ biến môi trường `GITHUB_TOKEN`
+- [x] Fetch **profile**: `GET /users/{username}` → lưu vào `raw_data`
+- [x] Fetch **danh sách repo**: `GET /users/{username}/repos` (nhớ phân trang, `per_page=100`) → lưu từng repo
+- [x] Fetch **languages** cho mỗi repo: `GET /repos/{owner}/{repo}/languages`
+- [x] Fetch **README** cho mỗi repo: `GET /repos/{owner}/{repo}/readme` (decode base64)
+- [x] Fetch **dependency files** nếu có: thử lấy `package.json`, `pom.xml`, `build.gradle`, `requirements.txt`, `go.mod`, `Dockerfile` qua Contents API
+- [x] Fetch **commit activity**: `GET /repos/{owner}/{repo}/stats/commit_activity` (chú ý: API này có thể trả 202, cần retry)
+- [x] Xử lý rate limit: đọc header `X-RateLimit-Remaining`, nếu gần hết thì dừng và báo lỗi rõ ràng
+- [x] Endpoint `POST /api/ingest/{username}` chạy toàn bộ quá trình fetch (dùng `@Async` hoặc chạy đồng bộ cũng được ở V1)
+- [x] Endpoint `GET /api/ingest/{username}/status` xem đã fetch được những gì
+- [x] Cache: nếu dữ liệu đã fetch trong vòng 24h thì không fetch lại (tránh tốn rate limit)
 
 **Definition of Done**: Gọi `POST /api/ingest/{your-username}` → mở Postgres thấy đủ profile, repos, languages, README, dependency files trong bảng `raw_data`.
 

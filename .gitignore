@@ -1,5 +1,6 @@
 # Secrets
 .env
+/DevTwin_Backend/demo/src/main/resources/application.yaml
 
 # Java / Maven / Gradle
 *.class

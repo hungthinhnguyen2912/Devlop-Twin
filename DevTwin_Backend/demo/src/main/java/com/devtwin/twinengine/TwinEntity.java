@@ -48,6 +48,9 @@ public class TwinEntity {
     @Column(name = "ai_summary", columnDefinition = "text")
     private String aiSummary;
 
+    @Column(name = "summary_source_hash", length = 64)
+    private String summarySourceHash;
+
     @Column(name = "built_at", nullable = false)
     private Instant builtAt;
 
@@ -63,6 +66,8 @@ public class TwinEntity {
             String displayName,
             JsonNode profile,
             Instant builtAt,
+            String aiSummary,
+            String summarySourceHash,
             List<SkillClaim> skills
     ) {
         this.platform = platform;
@@ -70,6 +75,8 @@ public class TwinEntity {
         this.displayName = displayName;
         this.profile = profile;
         this.builtAt = builtAt;
+        this.aiSummary = aiSummary;
+        this.summarySourceHash = summarySourceHash;
         skills.forEach(skill -> this.skills.add(new SkillClaimEntity(this, skill)));
     }
 
@@ -95,6 +102,14 @@ public class TwinEntity {
 
     public Instant getBuiltAt() {
         return builtAt;
+    }
+
+    public String getSummarySourceHash() {
+        return summarySourceHash;
+    }
+
+    public void updateAiSummary(String aiSummary) {
+        this.aiSummary = aiSummary;
     }
 
     public List<SkillClaimEntity> getSkills() {
